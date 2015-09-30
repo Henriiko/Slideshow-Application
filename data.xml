@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Presentation>
+	<swf>
+		<file>swf/test_one.swf</file>
+		<title>Test One</title>
+	</swf>
+	<swf>
+		<file>swf/test_two.swf</file>
+		<title>Test Two</title>
+	</swf>
+	<swf>
+		<file>swf/test_three.swf</file>
+		<title>Test Three</title>
+	</swf>
+	<swf>
+		<file>swf/test_four.swf</file>
+		<title>Test Four</title>
+	</swf>
+	
+</Presentation>
