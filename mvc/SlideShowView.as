@@ -13,6 +13,8 @@ package mvc
 		public var loaderContent:MovieClip;
 		public var bg:Shape;
 		public var container:Sprite;
+		private var previousFile:String;
+		
 		
 		public function SlideShowView(c:Sprite)
 		{
@@ -26,16 +28,18 @@ package mvc
 	
 		override public function update(event:Event = null):void
 		{
-			_loader.unload();
-			_loader.load(new URLRequest(model.currentFile));
-		}
-		
-		override public function updateLabel(event:Event = null):void
-		{
-			if (loaderContent)
+			if (model.currentFile != previousFile)
+			{
+				_loader.unload();
+				_loader.load(new URLRequest(model.currentFile));
+				previousFile = model.currentFile;
+				trace(loaderContent.currentLabels.length);
+			
+			}else if (loaderContent)
 			{
 				loaderContent.gotoAndPlay(loaderContent.currentLabels[model.currentLabel].name);
 			}
+				
 		}
 		
 		private function imageLoaded(event:Event):void
@@ -45,7 +49,6 @@ package mvc
 			
 			container.addChild(_loader);
 			loaderContent.gotoAndPlay(loaderContent.currentLabels[model.currentLabel].name);
-			//ei ongelmaa tässä metodissa :/
 		}
 		
 		

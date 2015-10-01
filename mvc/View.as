@@ -25,7 +25,6 @@ package mvc
 		{
 			_model = m;
 			_model.addEventListener(Model.MODEL_CHANGE, update);
-			_model.addEventListener(Model.LABEL_CHANGE, updateLabel)
 		}
 		
 		public function get model():*

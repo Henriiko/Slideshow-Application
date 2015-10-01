@@ -29,20 +29,14 @@ package mvc
 			loader.load(req);
 		}
 		
-		public function setCurrentIndex(index:int):void
+		public function setCurrentIndex(index:int, label:int):void
 		{
+			trace('setCurrentIndex');
 			currentIndex = index;
+			currentLabel = label;
 			controlCurrentIndex();
 			updateData();
 			dispatchEvent(new Event(Model.MODEL_CHANGE));
-		}
-		// Nämä kaksi metodia tulisi yhdistää, jotta olisi vain yksi updateData(), myös eventDispatchit olisi hyvä yhdistää!
-		public function setCurrentLabel(label:int):void
-		{
-			currentLabel = label;
-			controlCurrentLabel();
-			updateData();
-			dispatchEvent(new Event(Model.LABEL_CHANGE));
 		}
 		
 		protected function updateData():void
@@ -50,7 +44,7 @@ package mvc
 			
 		}
 		
-		private function controlCurrentIndex():void
+		protected function controlCurrentIndex():void
 		{
 			if(currentIndex >= totalItems)
 			{
@@ -62,19 +56,19 @@ package mvc
 			}
 		}
 		
-		private function controlCurrentLabel():void
+		protected function controlCurrentLabel():void
 		{
 			if(totalLabels)
 			{
 				if(currentLabel >= totalLabels)
 				{
 					currentLabel = 0;
-					setCurrentIndex(currentIndex + 1);
+					currentIndex = currentIndex + 1;
 				}
 				else if(currentLabel < 0)
 				{
 					currentLabel = totalLabels - 1;
-					setCurrentIndex(currentIndex - 1);
+					currentIndex = currentIndex - 1;
 				}
 				
 				//Tästä metodista tulisi poistaa kaikki funktiot ja jättää ainoastaan päivittäminen.
@@ -83,9 +77,9 @@ package mvc
 		
 		protected function dataLoaded(event:Event):void
 		{
+			
 			data = loader.data;
-			setCurrentLabel(currentLabel);
-			setCurrentIndex(currentIndex);
+			setCurrentIndex(currentIndex, currentLabel);
 			
 		}
 		
