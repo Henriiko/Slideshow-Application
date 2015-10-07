@@ -13,27 +13,17 @@ package mvc
 		
 		public function nextItem(event:Event = null):void
 		{
-			model.setCurrentIndex(model.currentIndex + 1, model.currentLabel);	
+			model.setCurrentIndex(model.currentIndex + 1);	
 		}
 		
 		public function prevItem(event:Event = null):void
 		{
-			model.setCurrentIndex(model.currentIndex - 1, model.currentLabel);
+			model.setCurrentIndex(model.currentIndex - 1);
 		}
 		
-		public function nextLabel():void
-		{	
-			model.setCurrentIndex(model.currentIndex, model.currentLabel + 1);	
-		}
-		
-		public function prevLabel():void
+		public function selectItem(number:Number):void
 		{
-			model.setCurrentIndex(model.currentIndex, model.currentLabel - 1);
-		}
-		
-		public function selectLabel():void
-		{
-		 // Tähän numerovalinta controller
+			model.setCurrentIndex(number - 1);
 		}
 	}
 }

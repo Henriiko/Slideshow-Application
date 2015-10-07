@@ -17,21 +17,17 @@ package mvc
 		
 		override protected function updateData():void
 		{
-			//Tämä metodi toteutuu kaksi kertaa!
 			currentSWF = swf[currentIndex];
 			totalItems = swf.length();
 			currentTitle = currentSWF.title;
 			currentFile = currentSWF.file;
-			
-			
 		}
 		
 		override protected function dataLoaded(event:Event):void
 		{
-			
 			data = new XML(loader.data);
 			swf = data.swf;
-			setCurrentIndex(currentIndex, currentLabel);
+			setCurrentIndex(currentIndex);
 			
 			
 		}

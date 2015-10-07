@@ -16,11 +16,6 @@ package mvc
 			
 		}
 		
-		public function updateLabel(event:Event = null):void
-		{
-		
-		}
-		
 		public function set model(m:Model):void
 		{
 			_model = m;
