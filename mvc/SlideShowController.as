@@ -2,10 +2,11 @@ package mvc
 {
 	import flash.display.DisplayObject;
 	import flash.display.Stage;
+	import flash.display.Sprite;
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
-	import flash.utils.Timer;
 	import flash.events.TimerEvent;
+	import flash.utils.Timer;
 	
 	public class SlideShowController extends Controller
 	{
@@ -14,9 +15,11 @@ package mvc
 		private var numA:String;
 		private var numB:String;
 		private var timeCompleted:Boolean = true;
-	
+		private var settingsPanel:DisplayObject;
+		
 		public function SlideShowController(m:Model)
-		{		
+		{	
+			
 			super(m);
 		}
 		
@@ -28,6 +31,32 @@ package mvc
 		public function addKeyBoardControl(stage:Stage):void
 		{
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, KeyControl);
+		}
+		
+		public function addSettingsButton(Btn:Sprite):void
+		{
+			Btn.addEventListener(MouseEvent.CLICK, activateSettingsPanel);
+			Btn.buttonMode = true;
+		}
+		
+		public function addSettingsCloseButton(Btn:DisplayObject):void
+		{
+			Btn.addEventListener(MouseEvent.CLICK, closeSettingsPanel);
+		}
+		
+		public function addSettingsPanel(Panel:DisplayObject):void
+		{
+			settingsPanel = Panel
+		}
+		
+		public function activateSettingsPanel(event:MouseEvent):void
+		{
+			model.showSettingsPanel();
+		}
+		
+		public function closeSettingsPanel(event:MouseEvent):void
+		{
+			model.closeSettingsPanel();
 		}
 		
 		private function KeyControl(event:KeyboardEvent):void

@@ -28,8 +28,6 @@ package mvc
 			data = new XML(loader.data);
 			swf = data.swf;
 			setCurrentIndex(currentIndex);
-			
-			
 		}
 	}
 }

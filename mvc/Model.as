@@ -14,6 +14,8 @@ package mvc
 		public var data:*;
 		
 		public static const MODEL_CHANGE:String = 'modelChange';
+		public static const SETTINGS_OPEN:String = 'settingsOpen'
+		public static const SETTINGS_CLOSE:String = 'settingsClose'
 		
 		public function Model()
 		{
@@ -32,6 +34,16 @@ package mvc
 			controlCurrentIndex();
 			updateData();
 			dispatchEvent(new Event(Model.MODEL_CHANGE));
+		}
+		
+		public function showSettingsPanel():void
+		{
+			dispatchEvent(new Event(Model.SETTINGS_OPEN));
+		}
+		
+		public function closeSettingsPanel():void
+		{
+			dispatchEvent(new Event(Model.SETTINGS_CLOSE));
 		}
 		
 		protected function updateData():void

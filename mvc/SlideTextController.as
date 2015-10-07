@@ -4,15 +4,15 @@ package mvc
 	import flash.display.Stage;
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
-	//lisää input fieldin import
+    import flash.text.TextField;
 	
 	public class SlideTextController extends Controller
 	{
 	
-		public function SlideTextController(m:Model, input:)
+		public function SlideTextController(m:Model, input:TextField)
 		{
 			super(m);
-			//lisää input parametri.
+			//lisää input parametri
 		}
 		
 		public function setUserName():void
