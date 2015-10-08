@@ -5,6 +5,7 @@ package mvc
 	public class Controller
 	{
 		public var model:Model;
+		protected var keysEnabled:Boolean = true;
 		
 		public function Controller(m:Model)
 		{
@@ -13,17 +14,26 @@ package mvc
 		
 		public function nextItem(event:Event = null):void
 		{
-			model.setCurrentIndex(model.currentIndex + 1);	
+			if(keysEnabled)
+			{
+				model.setCurrentIndex(model.currentIndex + 1);	
+			}
 		}
 		
 		public function prevItem(event:Event = null):void
 		{
-			model.setCurrentIndex(model.currentIndex - 1);
+			if(keysEnabled)
+			{
+				model.setCurrentIndex(model.currentIndex - 1);
+			}
 		}
 		
 		public function selectItem(number:Number):void
 		{
-			model.setCurrentIndex(number - 1);
+			if(keysEnabled)
+			{
+				model.setCurrentIndex(number - 1);
+			}
 		}
 	}
 }

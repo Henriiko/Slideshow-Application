@@ -1,6 +1,7 @@
 package mvc
 {
 	import flash.events.Event;
+	import flash.events.DataEvent;
 	
 	public class View
 	{
@@ -26,12 +27,18 @@ package mvc
 			
 		}
 		
+		public function setUserName(de:DataEvent = null):void
+		{
+			
+		}
+		
 		public function set model(m:Model):void
 		{
 			_model = m;
 			_model.addEventListener(Model.MODEL_CHANGE, update);
 			_model.addEventListener(Model.SETTINGS_OPEN, settingsOpen);
 			_model.addEventListener(Model.SETTINGS_CLOSE, settingsClose);
+			_model.addEventListener(DataEvent.DATA, setUserName);
 		}		
 		
 		public function get model():*

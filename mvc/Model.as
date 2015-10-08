@@ -1,5 +1,6 @@
 package mvc
 {
+	import flash.events.DataEvent;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.net.URLLoader;
@@ -36,11 +37,16 @@ package mvc
 			dispatchEvent(new Event(Model.MODEL_CHANGE));
 		}
 		
+		public function setUserName(str:String):void
+		{
+			dispatchEvent(new DataEvent(DataEvent.DATA, false, false, str));
+		}
+		
 		public function showSettingsPanel():void
 		{
 			dispatchEvent(new Event(Model.SETTINGS_OPEN));
 		}
-		
+		 
 		public function closeSettingsPanel():void
 		{
 			dispatchEvent(new Event(Model.SETTINGS_CLOSE));

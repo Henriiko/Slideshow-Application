@@ -2,8 +2,10 @@ package mvc
 {
 	import flash.display.Sprite;
 	import flash.display.Stage;
+	import flash.events.DataEvent;
 	import flash.events.Event;
 	import flash.text.TextField;
+	
 	import SettingsTab;
 	
 	public class SlideTextView extends View
@@ -35,11 +37,13 @@ package mvc
 		public override function settingsOpen(event:Event = null):void
 		{
 			stageView.addChild(settingsPanel);
+			//stageView.focus = settingsPanel.input_txt;
 		}
 		
 		public override function settingsClose(event:Event = null):void
 		{
 			stageView.removeChild(settingsPanel);
+			stageView.focus = stageView;
 		}
 		
 		override public function update(event:Event = null):void
@@ -48,6 +52,10 @@ package mvc
 			datenumbers.text = String(currentDate.getDate() + '.' + (currentDate.getMonth() + 1) + '.' + currentDate.getFullYear());
 		}
 		
+		public override function setUserName(de:DataEvent = null):void
+		{
+			username.text = de.data;
+		}
 		
 		
 		

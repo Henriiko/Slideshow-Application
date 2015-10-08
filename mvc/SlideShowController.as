@@ -1,8 +1,9 @@
 package mvc
 {
 	import flash.display.DisplayObject;
-	import flash.display.Stage;
 	import flash.display.Sprite;
+	import flash.display.Stage;
+	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
@@ -19,7 +20,6 @@ package mvc
 		
 		public function SlideShowController(m:Model)
 		{	
-			
 			super(m);
 		}
 		
@@ -30,6 +30,8 @@ package mvc
 		
 		public function addKeyBoardControl(stage:Stage):void
 		{
+			model.addEventListener(Model.SETTINGS_OPEN, disableKeys);
+			model.addEventListener(Model.SETTINGS_CLOSE, enableKeys);
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, KeyControl);
 		}
 		
@@ -59,32 +61,45 @@ package mvc
 			model.closeSettingsPanel();
 		}
 		
+		private function disableKeys(event:Event):void
+		{
+			keysEnabled = false;
+		}
+		
+		private function enableKeys(event:Event):void
+		{
+			keysEnabled = true;
+		}
+		
 		private function KeyControl(event:KeyboardEvent):void
 		{
-			if (parseInt(String.fromCharCode(event.keyCode)) is int)
+			if(keysEnabled)
 			{
-				if (numA == null)
-				{	keyTimer = new Timer(500, 1);
-					keyTimer.addEventListener(TimerEvent.TIMER_COMPLETE, timerComplete);
-					numA = String.fromCharCode(event.keyCode);
-					keyTimer.start();
-					timeCompleted = false;
-				}
-				else if (numA != null && !timeCompleted)
+				if (parseInt(String.fromCharCode(event.keyCode)) is int)
 				{
-					numB = String.fromCharCode(event.keyCode);
-				}
-				
-			}else
-			{
-				switch(event.keyCode)
-				{	
-					case 39: 
-					nextItem();
-					break;
-					case 37:
-					prevItem();
-					break;
+					if (numA == null)
+					{	keyTimer = new Timer(500, 1);
+						keyTimer.addEventListener(TimerEvent.TIMER_COMPLETE, timerComplete);
+						numA = String.fromCharCode(event.keyCode);
+						keyTimer.start();
+						timeCompleted = false;
+					}
+					else if (numA != null && !timeCompleted)
+					{
+						numB = String.fromCharCode(event.keyCode);
+					}
+					
+				}else
+				{
+					switch(event.keyCode)
+					{	
+						case 39: 
+						nextItem();
+						break;
+						case 37:
+						prevItem();
+						break;
+					}
 				}
 			}
 			
