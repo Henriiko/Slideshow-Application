@@ -1,15 +1,18 @@
-package mvc
+﻿package mvc
 {
 	import flash.events.Event;
+	import flash.display.Stage;
 
 	public class Controller
 	{
 		public var model:Model;
 		protected var keysEnabled:Boolean = true;
+		protected var stageView:Stage
 		
-		public function Controller(m:Model)
+		public function Controller(m:Model, s:Stage)
 		{
 			model = m;
+			stageView = s;
 		}
 		
 		public function nextItem(event:Event = null):void

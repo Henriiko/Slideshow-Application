@@ -1,9 +1,11 @@
-package 
+﻿package 
 {
 	import flash.display.MovieClip;
 	import flash.events.MouseEvent;
 	import flash.net.URLRequest;
 	import flash.display.Stage;
+	import flash.display.StageScaleMode;
+	import flash.display.StageAlign;
 	
 	import mvc.SlideShowController;
 	import mvc.SlideShowModel;
@@ -23,6 +25,10 @@ package
 		
 		public function PresentationDocument()
 		{	
+			
+			this.stage.scaleMode = StageScaleMode.SHOW_ALL;
+			this.stage.align = StageAlign.LEFT;
+		
 			slideView = new SlideShowView(container_mc);
 			textView = new SlideTextView(numbers_txt, date_txt, name_txt, this.stage);
 			
@@ -35,8 +41,8 @@ package
 			slideView.model = slideModel;
 			textView.model = slideModel;
 			
-			slideController = new SlideShowController(slideModel);
-			textController = new SlideTextController(slideModel, settingsP.input_txt);
+			slideController = new SlideShowController(slideModel, this.stage);
+			textController = new SlideTextController(slideModel, this.stage, settingsP.input_txt);
 			
 			slideModel.load(new URLRequest('data.xml'));
 			
@@ -45,6 +51,7 @@ package
 			slideController.addSettingsButton(settings_mc);
 			slideController.addSettingsPanel(settingsP);
 			slideController.addSettingsCloseButton(settingsP.offBtn_mc)
+			slideController.addFullScreenButton(settingsP.fullscreenBtn_mc);
 			
 		}
 		

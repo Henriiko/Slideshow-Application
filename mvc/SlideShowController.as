@@ -1,4 +1,4 @@
-package mvc
+﻿package mvc
 {
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
@@ -8,19 +8,46 @@ package mvc
 	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
+	import com.greensock.*;
+	import flash.ui.Mouse;
+	
+	import flash.display.StageDisplayState;
 	
 	public class SlideShowController extends Controller
 	{
 	
 		private var keyTimer:Timer;
+		private var mouseTimer:Timer;
 		private var numA:String;
 		private var numB:String;
 		private var timeCompleted:Boolean = true;
 		private var settingsPanel:DisplayObject;
 		
-		public function SlideShowController(m:Model)
+		public function SlideShowController(m:Model, s:Stage)
 		{	
-			super(m);
+			super(m, s);
+			s.addEventListener(MouseEvent.MOUSE_MOVE, mouseFadeIn);
+			initiateMouseFade();
+		}
+		
+		private function mouseFadeIn(event:MouseEvent):void
+		{
+			Mouse.show();
+			mouseTimer.reset();
+			mouseTimer.start();
+		}
+		
+		private function initiateMouseFade():void
+		{
+			mouseTimer = new Timer(5000, 1);
+			mouseTimer.start();
+			mouseTimer.addEventListener(TimerEvent.TIMER_COMPLETE, mouseFade);
+		}
+		
+		private function mouseFade(event:TimerEvent):void
+		{
+			Mouse.hide();
+			mouseTimer.stop();
 		}
 		
 		public function addNextButton(Btn:DisplayObject):void
@@ -38,17 +65,31 @@ package mvc
 		public function addSettingsButton(Btn:Sprite):void
 		{
 			Btn.addEventListener(MouseEvent.CLICK, activateSettingsPanel);
+			Btn.addEventListener(MouseEvent.MOUSE_OVER, onMouseOver);
+			Btn.addEventListener(MouseEvent.MOUSE_OUT, onMouseOut);
 			Btn.buttonMode = true;
+			
 		}
 		
 		public function addSettingsCloseButton(Btn:DisplayObject):void
 		{
 			Btn.addEventListener(MouseEvent.CLICK, closeSettingsPanel);
+			Btn.addEventListener(MouseEvent.MOUSE_OVER, onMouseOver);
+			Btn.addEventListener(MouseEvent.MOUSE_OUT, onMouseOut);
 		}
 		
 		public function addSettingsPanel(Panel:DisplayObject):void
 		{
-			settingsPanel = Panel
+			settingsPanel = Panel;
+		}
+		
+		public function addFullScreenButton(Btn:Sprite):void
+		{
+			Btn.addEventListener(MouseEvent.CLICK, toggleFullScreen);0
+			Btn.addEventListener(MouseEvent.MOUSE_OVER, onMouseOver);
+			Btn.addEventListener(MouseEvent.MOUSE_OUT, onMouseOut);
+			Btn.buttonMode = true;
+			
 		}
 		
 		public function activateSettingsPanel(event:MouseEvent):void
@@ -56,7 +97,19 @@ package mvc
 			model.showSettingsPanel();
 		}
 		
-		public function closeSettingsPanel(event:MouseEvent):void
+		public function toggleFullScreen(event:MouseEvent = null):void
+		{
+			if(stageView.displayState == StageDisplayState.NORMAL)
+			{
+				stageView.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
+			}
+			else if(stageView.displayState == StageDisplayState.FULL_SCREEN_INTERACTIVE)
+			{
+				stageView.displayState = StageDisplayState.NORMAL;
+			}
+		}
+		
+		public function closeSettingsPanel(event:MouseEvent = null):void
 		{
 			model.closeSettingsPanel();
 		}
@@ -71,10 +124,18 @@ package mvc
 			keysEnabled = true;
 		}
 		
+		private function onMouseOver(event:MouseEvent):void
+		{
+			event.target.gotoAndStop(2)
+		}
+		
+		private function onMouseOut(event:MouseEvent):void
+		{
+			event.target.gotoAndStop(1)
+		}
+		
 		private function KeyControl(event:KeyboardEvent):void
 		{
-			if(keysEnabled)
-			{
 				if (parseInt(String.fromCharCode(event.keyCode)) is int)
 				{
 					if (numA == null)
@@ -99,9 +160,20 @@ package mvc
 						case 37:
 						prevItem();
 						break;
+						case 122:
+						toggleFullScreen();
+						break;
+						case 13:
+						closeSettingsPanel();
+						break;
+						case 27:
+						closeSettingsPanel();
+						break;
+						
 					}
 				}
-			}
+			
+			
 			
 		}
 		

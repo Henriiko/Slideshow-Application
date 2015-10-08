@@ -1,4 +1,4 @@
-package mvc
+﻿package mvc
 {
 	import flash.display.DisplayObject;
 	import flash.display.Stage;
@@ -13,9 +13,9 @@ package mvc
 		private var inputField:TextField;
 		private var placeholder_text:String = 'Etunimi Sukunimi  ';
 	
-		public function SlideTextController(m:Model, input:TextField)
+		public function SlideTextController(m:Model, s:Stage, input:TextField)
 		{
-			super(m);
+			super(m, s);
 			setInputField(input);
 		}
 		
@@ -28,7 +28,6 @@ package mvc
 			inputField.multiline = false;
 			inputField.maxChars = 25;
 			inputField.restrict = "A-Za-zöäÖÄ_ ";
-			inputField.background = true;
 			inputField.text = placeholder_text;
 		}
 		

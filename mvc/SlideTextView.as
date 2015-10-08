@@ -1,4 +1,4 @@
-package mvc
+﻿package mvc
 {
 	import flash.display.Sprite;
 	import flash.display.Stage;
@@ -42,8 +42,11 @@ package mvc
 		
 		public override function settingsClose(event:Event = null):void
 		{
-			stageView.removeChild(settingsPanel);
-			stageView.focus = stageView;
+			if(stageView.contains(settingsPanel))
+			{
+				stageView.removeChild(settingsPanel);
+				stageView.focus = stageView;
+			}
 		}
 		
 		override public function update(event:Event = null):void
